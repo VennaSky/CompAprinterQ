@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Printer Troubleshooting Quiz</title>
+  <style>
+    /* Add some basic styling to the quiz */
+    body {
+      font-family: Arial, sans-serif;
+    }
+ 
+    h1 {
+      text-align: center;
+    }
+ 
+    .question {
+      margin-bottom: 10px;
+    }
+ 
+    .options {
+      margin-left: 20px;
+    }
+ 
+    .button {
+      margin-top: 10px;
+    }
+ 
+    .correct {
+      color: green;
+    }
+ 
+    .incorrect {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Printer Troubleshooting Quiz</h1>
+  <div id="quiz"></div>
+   
+  <script>
+    // Define the quiz questions and answers
+    const questions = [
+      {
+        question: "What is the most common cause of paper jams in printers?",
+        options: ["Incorrect paper size", "Low toner levels", "Overheating", "Printer driver issues"],
+        answer: 0
+      },
+      {
+        question: "Which component of a laser printer attracts and transfers toner particles to the paper?",
+        options: ["Transfer roller", "Imaging drum", "Fuser", "Corona wire"],
+        answer: 1
+      },
+      {
+        question: "What settings can be adjusted to make printouts lighter or darker?",
+        options: ["Print density settings", "Page orientation settings", "Paper type settings", "Print quality settings"],
+        answer: 0
+      },
+      {
+        question: "Which type of printer works by spraying ink onto the paper?",
+        options: ["Laser", "Thermal", "Inkjet", "Dot matrix"],
+        answer: 2
+      },
+      {
+        question: "What can cause inkjet printer output to appear streaky or incomplete?",
+        options: ["Low ink levels", "Loose cables", "Overheating", "Clogged ink nozzles"],
+        answer: 3
+      },
+      {
+        question: "What might be the cause if a printer is not picking up paper from the tray?",
+        options: ["Paper feed rollers need cleaning", "Print spooler corruption", "Outdated printer driver", "Faulty USB cable"],
+        answer: 0
+      },
+      {
+        question: "Which type of connection allows printers to be connected directly to a network?",
+        options: ["Ethernet", "USB", "HDMI", "Bluetooth"],
+        answer: 0
+      },
+      {
+        question: "What should be done before installing a new ink or toner cartridge?",
+        options: ["Shake the cartridge vigorously", "Remove the protective seal", "Clean the print heads", "Perform a calibration test"],
+        answer: 1
+      },
+      {
+        question: "What is a common cause of print jobs getting stuck in the print queue?",
+        options: ["Insufficient memory", "Outdated printer firmware", "Incorrect paper size", "Print spooler corruption"],
+        answer: 3
+      },
+      {
+        question: "Which component of a laser printer charges the photosensitive drum?",
+        options: ["Fuser", "Transfer roller", "Imaging drum", "Corona wire"],
+        answer: 3
+      },
+    ];
+ 
+    // Function to create the quiz
+    function createQuiz() {
+      const quizContainer = document.getElementById("quiz");
+ 
+      questions.forEach((question, index) => {
+        const questionElement = document.createElement("div");
+        questionElement.className = "question";
+        questionElement.innerHTML = `<p>${index + 1}. ${question.question}</p>`;
+ 
+        const optionsElement = document.createElement("div");
+        optionsElement.className = "options";
+         
+        question.options.forEach((option, optionIndex) => {
+          const radioBtn = document.createElement("input");
+          radioBtn.type = "radio";
+          radioBtn.name = `question${index}`;
+          radioBtn.value = optionIndex;
+          optionsElement.appendChild(radioBtn);
+ 
+          const label = document.createElement("label");
+          label.innerHTML = option;
+          optionsElement.appendChild(label);
+        });
+ 
+        questionElement.appendChild(optionsElement);
+        quizContainer.appendChild(questionElement);
+      });
+ 
+      const submitBtn = document.createElement("button");
+      submitBtn.className = "button";
+      submitBtn.innerHTML = "Submit";
+      submitBtn.addEventListener("click", showResults);
+      quizContainer.appendChild(submitBtn);
+    }
+ 
+    // Function to calculate the score and display the result
+    function showResults() {
+      const quizContainer = document.getElementById("quiz");
+      const result = document.createElement("div");
+      let score = 0;
+ 
+      questions.forEach((question, index) => {
+        const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+        const questionElement = document.getElementsByClassName("question")[index];
+ 
+        if (selectedOption) {
+          const answerIndex = Number(selectedOption.value);
+ 
+          if (answerIndex === question.answer) {
+            questionElement.classList.add("correct");
+            score++;
+          } else {
+            questionElement.classList.add("incorrect");
+          }
+        } else {
+          questionElement.classList.add("incorrect");
+        }
+      });
+ 
+      result.innerHTML = `Your score: ${score}/${questions.length}`;
+      quizContainer.appendChild(result);
+    }
+ 
+    // Call the createQuiz function to generate the quiz
+    createQuiz();
+  </script>
+</body>
+</html>
